@@ -1,5 +1,7 @@
 package vn.techmaster.jobhunt.repository;
 
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Repository;
@@ -12,23 +14,44 @@ public class EmployerRepository {
 
         public EmployerRepository() {
                 employers = new ConcurrentHashMap<>();
-                employers.put("1a", new Employer("1a", "VNG Corporation", "/resources/vng.webp", "https://vng.com.vn/",
-                                "vngcorporation@vng.com.vn"));
+                employers.put("1a",
+                                new Employer("1a", "VNG Corporation", "img/Vng.webp",
+                                                "https://vng.com.vn/",
+                                                "vngcorporation@vng.com.vn"));
                 employers.put("2a",
-                                new Employer("2a", "BlueBottle Digital Việt Nam", "/resources/BlueBottle.webp",
+                                new Employer("2a", "BlueBottle Digital Việt Nam", "img/BlueBottle.webp",
                                                 "https://www.bluebottle.vn/",
-                                                "recruit@castis.com"));
+                                                "recruit@bluebottle.com"));
                 employers.put("3a",
-                                new Employer("3a", "Viettel Post", "/resources/Viettel.webp",
+                                new Employer("3a", "Viettel Post", "img/Viettel.webp",
                                                 "https://viettelpost.com.vn/",
                                                 "kinhdoanh@viettelpost.com.vn"));
                 employers.put("4a",
-                                new Employer("4a", "MB Bank", "/resources/mbbank.webp", "https://www.mbbank.com.vn/",
-                                                "mb247@mbbank.com.vn"));
+                                new Employer("4a", "GEM Corporation", "img/Gem.webp",
+                                                "https://gemvietnam.com/",
+                                                "contact@gemvietnam.com"));
 
         }
 
-        public ConcurrentHashMap<String, Employer> getEmployers() {
-                return employers;
+        public List<Employer> getEmployers() {
+                return employers.values().stream().toList();
         }
+
+        public void addEmployer(Employer employer) {
+                String uuid = UUID.randomUUID().toString();
+                employers.put(uuid, employer);
+        }
+
+        public Employer findById(String id) {
+                return employers.get(id);
+        }
+
+        public void updateEmployer(String id, Employer employer) {
+                employers.put(id, employer);
+        }
+
+        public void deleteEmployer(String id) {
+                employers.remove(id);
+        }
+
 }

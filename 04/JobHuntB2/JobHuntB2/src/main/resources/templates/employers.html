@@ -13,18 +13,23 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Logo path</th>
+                    <th scope="col">Logo</th>
                     <th scope="col">Website</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="employer, iStat:${employers}">
                     <th scope="row" th:text="${iStat.index} +1"></th>
                     <td th:text="${employer.name}"></td>
-                    <td th:text="${employer.logo_path}"></td>
+                    <td><img th:src="@{${'~/' + employer.logo_path}}" alt="" />
+                    </td>
                     <td th:text="${employer.website}"></td>
                     <td th:text="${employer.email}"></td>
+                    <td><a th:href="@{/employer/{id}/edit(id=${employer.getId()})}">Update</a></td>
+                    <td><a th:href="@{/employer/{id}/delete(id=${employer.getId()})}">Delete</a></td>
                 </tr>
             </tbody>
         </table>
