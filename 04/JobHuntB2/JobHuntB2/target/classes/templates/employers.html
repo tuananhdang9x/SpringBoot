@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="template.html :: header('employer')">
+</head>
+
+<body>
+    <header th:insert="template.html :: topmenu"></header>
+    <div class="container">
+        <p>Danh sách nhà tuyển dụng</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Logo path</th>
+                    <th scope="col">Website</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="employer, iStat:${employers}">
+                    <th scope="row" th:text="${iStat.index} +1"></th>
+                    <td th:text="${employer.name}"></td>
+                    <td th:text="${employer.logo_path}"></td>
+                    <td th:text="${employer.website}"></td>
+                    <td th:text="${employer.email}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <header th:replace="template.html :: footer"></header>
+</body>
+
+</html>
