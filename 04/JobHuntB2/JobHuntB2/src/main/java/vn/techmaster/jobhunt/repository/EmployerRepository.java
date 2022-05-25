@@ -37,9 +37,8 @@ public class EmployerRepository {
                 return employers.values().stream().toList();
         }
 
-        public void addEmployer(Employer employer) {
-                String uuid = UUID.randomUUID().toString();
-                employers.put(uuid, employer);
+        public void addEmployer(String id, Employer employer) {
+                employers.put(id, employer);
         }
 
         public Employer findById(String id) {

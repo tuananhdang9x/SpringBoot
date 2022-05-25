@@ -40,7 +40,9 @@ public class EmployerController {
 
     @PostMapping("/save")
     public String saveEmployer(Employer employer, RedirectAttributes redirect) {
-        repo.addEmployer(employer);
+        String uuid = UUID.randomUUID().toString();
+        employer.setId(uuid);
+        repo.addEmployer(uuid, employer);
         redirect.addFlashAttribute("success", "Saved employer successfully!");
         return "redirect:/";
     }
