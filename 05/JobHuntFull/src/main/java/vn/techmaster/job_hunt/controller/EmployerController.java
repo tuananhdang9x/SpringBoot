@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import vn.techmaster.job_hunt.model.Employer;
 import vn.techmaster.job_hunt.request.EmployerRequest;
 import vn.techmaster.job_hunt.respository.EmployerRepo;
-import vn.techmaster.job_hunt.respository.JobRepo;
+
 import vn.techmaster.job_hunt.service.StorageService;
 
 @Controller
@@ -31,9 +31,6 @@ public class EmployerController {
 
   @Autowired
   private StorageService storageService;
-
-  @Autowired
-  private JobRepo jobRepo;
 
   @GetMapping
   public String listAllEmployers(Model model) {
@@ -92,6 +89,44 @@ public class EmployerController {
   public String deleteEmployerByID(@PathVariable String id) {
     Employer emp = employerRepo.deleteById(id);
     storageService.deleteFile(emp.getLogo_path());
+    return "redirect:/employer";
+  }
+
+  @GetMapping("/update/{id}")
+  public String editEmployer(@PathVariable("id") String id, Model model) {
+    model.addAttribute("employer", employerRepo.findById(id));
+    return "employer_update";
+  }
+
+  @PostMapping("/update/{id}")
+  public String updateEmployer(@Valid @ModelAttribute("employer") EmployerRequest employerRequest, Employer employer,
+      BindingResult result,
+      Model model) {
+    if (employerRequest.logo().getOriginalFilename().isEmpty()) {
+      result.addError(new FieldError("employer", "logo", "Logo is required"));
+    }
+
+    // Nêú có lỗi thì trả về trình duyệt
+    if (result.hasErrors()) {
+      return "employer_add";
+    }
+
+    // Thêm vào cơ sở dữ liệu
+    Employer emp = employerRepo.add(Employer.builder()
+        .name(employerRequest.name())
+        .website(employerRequest.website())
+        .email(employerRequest.email())
+        .build());
+
+    // Lưu logo vào ổ cứng
+    try {
+      String logoFileName = storageService.saveFile(employerRequest.logo(), emp.getId());
+      employerRepo.updateLogo(emp.getId(), logoFileName);
+    } catch (IOException e) {
+      // Nếu lưu file bị lỗi thì hãy xoá bản ghi Employer
+      e.printStackTrace();
+    }
+    employerRepo.updateEmployer(employer);
     return "redirect:/employer";
   }
 

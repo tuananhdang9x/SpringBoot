@@ -43,6 +43,11 @@ public class EmployerRepo {
     employers.put(id, emp);
   }
 
+  // Update employer
+  public void updateEmployer(Employer employer) {
+    employers.put(employer.getId(), employer);
+  }
+
   // Xóa employer
   public Employer deleteById(String id) {
     return employers.remove(id);
@@ -50,22 +55,30 @@ public class EmployerRepo {
 
   @PostConstruct
   public void addSomeData() {
-    this.add(Employer.builder().name("FPT")
+    this.add(Employer.builder()
+        .id("1a")
+        .name("FPT")
         .website("https://fpt.com.vn")
         .logo_path("fpt.jpg")
         .email("hr@fpt.com.vn").build());
 
-    this.add(Employer.builder().name("CMC")
+    this.add(Employer.builder()
+        .id("2a")
+        .name("CMC")
         .website("https://cmc.com.vn")
         .logo_path("cmc.jpg")
         .email("hr@cmc.com.vn").build());
 
-    this.add(Employer.builder().name("Amazon")
+    this.add(Employer.builder()
+        .id("3a")
+        .name("Amazon")
         .website("https://amazon.com")
         .logo_path("amazon.jpg")
         .email("hr@amazon.com.vn").build());
 
-    this.add(Employer.builder().name("Google")
+    this.add(Employer.builder()
+        .id("4a")
+        .name("Google")
         .website("https://google.com")
         .logo_path("google.webp")
         .email("hr@google.com.vn").build());

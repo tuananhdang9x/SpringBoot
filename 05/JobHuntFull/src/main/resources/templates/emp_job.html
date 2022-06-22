@@ -9,26 +9,46 @@
 </head>
 
 <body>
-    <h1>Employer jobs</h1>
-    <a href="/job/add">Thêm công việc</a><br><br>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">City</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="job, iStat:${jobs}">
-                <th scope="row" th:text="${iStat.index} +1"></th>
-                <td><a th:href="|/job/${job.emp_id}|" th:text="${job.title}"></a></td>
-                <td><a th:href="|/job/${job.emp_id}|" th:text="${job.description}"></a></td>
-                <td th:text="${job.city}">Hà Nội</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-lg-8 mt-5">
+            <form action="#" th:action="@{/job}" method="get" name="job" enctype="multipart/form-data"
+                th:object="${job}">
+                <div class="form-group row">
+                    <!-- lable mô tả trường -->
+                    <label for="name" class="col-sm-2 col-form-label">title</label>
+                    <!-- th:field tương ứng với đối tượng truyền vào. Vd: lấy ra thuộc tính name của employer -->
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="title" autocomplete="off" th:field="*{title}" />
+                    </div>
+                    <!-- Trong trường hợp trường này bị lỗi thì nó sẽ hiển thị lỗi ra -->
+                    <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error
+                    </div>
+                </div>
+                <div class="form-group row mt-3">
+                    <label for="name" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="description" autocomplete="off"
+                            th:field="*{description}" />
+                    </div>
+                    <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Web
+                        site
+                        Error</div>
+                </div>
+                <div class="form-group row mt-3">
+                    <label for="name" class="col-sm-2 col-form-label">City</label>
+                    <div class="col-sm-4">
+                        <select name="city" id="nationality">
+                            <option th:each="city:${cities}" th:text="${city.label}" th:value="${city}">Hà nội</option>
+                        </select>
+                    </div>
+                    <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+                        Description Error</div>
+                </div>
+
+                <button class="btn btn-primary mt-3" type="submit">Save</button>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

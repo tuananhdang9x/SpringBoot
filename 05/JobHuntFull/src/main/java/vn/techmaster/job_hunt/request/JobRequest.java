@@ -5,11 +5,12 @@ import javax.validation.constraints.NotBlank;
 import vn.techmaster.job_hunt.model.City;
 
 public record JobRequest(
-        String id,
-        String emp_id,
+                String id,
+                String emp_id,
+                String emp_name,
 
-        @NotBlank(message = "Title cannot null") String title,
+                @NotBlank(message = "Title cannot null") String title,
 
-        @NotBlank(message = "Description cannot null") String description,
-        City city) {
+                @NotBlank(message = "Description cannot null") String description,
+                City city) {
 }

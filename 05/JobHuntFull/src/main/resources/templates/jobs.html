@@ -12,11 +12,12 @@
   </nav>
 
   <h1>Jobs</h1>
-  <!-- <a href="/job/add">Thêm công việc</a><br><br> -->
+  <a href="/job/add">Thêm công việc</a><br><br>
   <table class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
+        <th scope="col">Employer</th>
         <th scope="col">Title</th>
         <th scope="col">Description</th>
         <th scope="col">City</th>
@@ -25,8 +26,9 @@
     <tbody>
       <tr th:each="job, iStat:${jobs}">
         <th scope="row" th:text="${iStat.index} +1"></th>
-        <td><a th:href="|/job/${job.id}|" th:text="${job.title}"></a></td>
-        <td><a th:href="${job.description}" th:text="${job.description}"></a></td>
+        <td th:text="${job.emp_name}"></td>
+        <td th:text="${job.title}"></a></td>
+        <td th:text="${job.description}"></a></td>
         <td th:text="${job.city}">Hà Nội</td>
       </tr>
     </tbody>

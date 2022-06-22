@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class Job {
   private String id;
   private String emp_id;
+  private String emp_name;
   private String title;
   private String description;
   private City city;

@@ -35,6 +35,14 @@ public class JobRepo {
     return empJobs;
   }
 
+  public Job getJobById(String id) {
+    return jobs.get(id);
+  }
+
+  public void createJob(Job job) {
+    jobs.put(job.getId(), job);
+  }
+
   public Job deleteById(String id) {
     return jobs.remove(id);
   }
@@ -45,19 +53,31 @@ public class JobRepo {
 
   @PostConstruct
   public void addSomeData() {
-    this.addJob(Job.builder().title("Tuyển dụng Amazon")
+    this.addJob(Job.builder()
+        .emp_id("3a")
+        .emp_name("Amazon")
+        .title("Tuyển dụng Amazon")
         .description("Backend developer")
         .city(City.HaNoi)
         .build());
-    this.addJob(Job.builder().title("Tuyển dụng Cmc")
+    this.addJob(Job.builder()
+        .emp_id("2a")
+        .emp_name("CMC")
+        .title("Tuyển dụng Cmc")
         .description("Backend developer")
         .city(City.DaNang)
         .build());
-    this.addJob(Job.builder().title("Tuyển dụng Fpt")
+    this.addJob(Job.builder()
+        .emp_id("1a")
+        .emp_name("FPT")
+        .title("Tuyển dụng Fpt")
         .description("Backend developer")
         .city(City.HaiPhong)
         .build());
-    this.addJob(Job.builder().title("Tuyển dụng Google")
+    this.addJob(Job.builder()
+        .emp_id("4a")
+        .emp_name("Google")
+        .title("Tuyển dụng Google")
         .description("Backend developer")
         .city(City.HoChiMinh)
         .build());

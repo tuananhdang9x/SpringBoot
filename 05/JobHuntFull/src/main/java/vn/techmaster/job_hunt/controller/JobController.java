@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.techmaster.job_hunt.model.City;
 import vn.techmaster.job_hunt.model.Job;
 import vn.techmaster.job_hunt.request.JobRequest;
+import vn.techmaster.job_hunt.respository.EmployerRepo;
 import vn.techmaster.job_hunt.respository.JobRepo;
 
 @Controller
@@ -25,19 +25,21 @@ public class JobController {
   @Autowired
   private JobRepo jobRepo;
 
+  @Autowired
+  private EmployerRepo employerRepo;
+
   @GetMapping
   public String listAllJobs(Model model) {
     model.addAttribute("jobs", jobRepo.getAll());
+    model.addAttribute("employer", employerRepo);
     return "jobs";
   }
 
   @GetMapping("/add")
-  public String showAddJobForm(Model model, @RequestParam("emp_id") String emp_id) {
-    Job job = new Job();
-    job.setEmp_id(emp_id);
-    model.addAttribute("job", job);
+  public String showAddJobForm(Model model) {
+    model.addAttribute("job", new Job());
+    model.addAttribute("employers", employerRepo.getAll());
     model.addAttribute("cities", City.values());
-
     return "job_add";
   }
 
@@ -46,6 +48,7 @@ public class JobController {
       BindingResult result,
       Model model) {
     jobRepo.addJob(Job.builder()
+        .emp_name(jobRequest.emp_name())
         .title(jobRequest.title())
         .description(jobRequest.description())
         .city(jobRequest.city())
